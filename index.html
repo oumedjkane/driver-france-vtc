@@ -1,10 +1,171 @@
-if (!depart || !destination || !date || !heure) {
-    alert("Merci de remplir tous les champs.");
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Driver France - VTC</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background:#f2f4f7;
+  margin:0;
+  padding:20px;
+}
+.container {
+  max-width:500px;
+  margin:auto;
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 4px 15px #ccc;
+}
+h1 {
+  text-align:center;
+  margin-bottom:5px;
+}
+.subtitle {
+  text-align:center;
+  color:#666;
+  margin-bottom:25px;
+}
+label {
+  display:block;
+  margin-top:15px;
+  font-weight:bold;
+}
+input, select, button {
+  width:100%;
+  padding:14px;
+  margin-top:7px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  box-sizing:border-box;
+  font-size:16px;
+}
+button {
+  margin-top:25px;
+  background:#111;
+  color:white;
+  border:none;
+  font-weight:bold;
+}
+.price {
+  margin-top:20px;
+  padding:18px;
+  background:#eee;
+  border-radius:12px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+}
+.info {
+  margin-top:20px;
+  text-align:center;
+  color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚗 DRIVER FRANCE</h1>
+<div class="subtitle">VTC Strasbourg • France • Allemagne • Suisse</div>
+
+<label>Départ</label>
+<input id="depart" type="text" placeholder="Adresse de départ">
+
+<label>Destination</label>
+<input id="destination" type="text" placeholder="Adresse d'arrivée">
+
+<label>Type de course</label>
+<select id="type" onchange="calculer()">
+<option value="normal">Course normale - 2 €/km</option>
+<option value="airport">Aéroport Strasbourg - 28 €</option>
+</select>
+
+<label>Distance en kilomètres</label>
+<input id="km" type="number" min="0" placeholder="Ex : 25" oninput="calculer()">
+
+<label>Date</label>
+<input id="date" type="date">
+
+<label>Heure</label>
+<input id="heure" type="time">
+
+<label>Nombre de passagers</label>
+<select id="passagers">
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+</select>
+
+<label>Paiement</label>
+<select id="paiement">
+<option>Carte bancaire</option>
+<option>Espèces</option>
+</select>
+
+<div class="price">
+Prix estimé : <span id="prix">0</span> €
+</div>
+
+<button onclick="reserver()">DEMANDER UNE RÉSERVATION</button>
+
+<div class="info">
+Service VTC professionnel<br>
+Strasbourg et alentours<br>
+France 🇫🇷 • Allemagne 🇩🇪 • Suisse 🇨🇭
+</div>
+
+</div>
+
+<script>
+
+function calculer() {
+
+  let type = document.getElementById("type").value;
+  let km = Number(document.getElementById("km").value) || 0;
+
+  let prix = 0;
+
+  if (type === "airport") {
+    prix = 28;
+  } else {
+    prix = km * 2;
+  }
+
+  document.getElementById("prix").innerText =
+    prix.toFixed(2);
+}
+
+function reserver() {
+
+  let depart = document.getElementById("depart").value;
+  let destination = document.getElementById("destination").value;
+  let date = document.getElementById("date").value;
+  let heure = document.getElementById("heure").value;
+
+  if (!depart || !destination || !date || !heure) {
+    alert("Merci de remplir le départ, la destination, la date et l'heure.");
     return;
   }
 
-  alert("Votre demande de réservation Driver France a bien été enregistrée.");
+  let prix = document.getElementById("prix").innerText;
+
+  alert(
+    "Demande de réservation Driver France\n\n" +
+    "Départ : " + depart + "\n" +
+    "Destination : " + destination + "\n" +
+    "Date : " + date + "\n" +
+    "Heure : " + heure + "\n" +
+    "Prix estimé : " + prix + " €"
+  );
 }
+
 </script>
 
 </body>
