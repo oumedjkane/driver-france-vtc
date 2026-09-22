@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,63 +7,110 @@
 <title>Driver France - VTC</title>
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background:#f2f4f7;
+*{box-sizing:border-box}
+
+body{
   margin:0;
+  font-family:Arial,sans-serif;
+  background:#f2f4f7;
+  color:#222;
+}
+
+.container{
+  max-width:520px;
+  margin:auto;
   padding:20px;
 }
-.container {
-  max-width:500px;
-  margin:auto;
-  background:white;
-  padding:25px;
-  border-radius:18px;
-  box-shadow:0 4px 15px #ccc;
-}
-h1 {
-  text-align:center;
-  margin-bottom:5px;
-}
-.subtitle {
-  text-align:center;
-  color:#666;
-  margin-bottom:25px;
-}
-label {
-  display:block;
-  margin-top:15px;
-  font-weight:bold;
-}
-input, select, button {
-  width:100%;
-  padding:14px;
-  margin-top:7px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  box-sizing:border-box;
-  font-size:16px;
-}
-button {
-  margin-top:25px;
+
+.header{
   background:#111;
   color:white;
-  border:none;
-  font-weight:bold;
+  padding:22px;
+  border-radius:18px;
+  text-align:center;
+  margin-bottom:18px;
 }
-.price {
-  margin-top:20px;
-  padding:18px;
-  background:#eee;
+
+.header h1{
+  margin:0;
+  font-size:30px;
+}
+
+.header p{
+  margin:8px 0 0;
+  color:#ddd;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:18px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px #0001;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:12px 0 6px;
+}
+
+input,select{
+  width:100%;
+  padding:14px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border:0;
   border-radius:12px;
-  text-align:center;
-  font-size:22px;
+  font-size:17px;
   font-weight:bold;
+  cursor:pointer;
 }
-.info {
-  margin-top:20px;
+
+.calculate{
+  background:#111;
+  color:white;
+  margin-top:18px;
+}
+
+.result{
+  display:none;
+  background:#f5f5f5;
+  padding:18px;
+  border-radius:12px;
+  margin-top:18px;
+}
+
+.price{
+  font-size:30px;
+  font-weight:bold;
   text-align:center;
-  color:#555;
+  margin:10px 0;
+}
+
+.book{
+  background:#16803c;
+  color:white;
+  margin-top:12px;
+}
+
+.airport{
+  background:#eee;
+  color:#222;
+  margin-top:10px;
+}
+
+.footer{
+  text-align:center;
+  color:#777;
+  font-size:13px;
+  margin-top:20px;
 }
 </style>
 </head>
@@ -71,99 +119,148 @@ button {
 
 <div class="container">
 
-<h1>🚗 DRIVER FRANCE</h1>
-<div class="subtitle">VTC Strasbourg • France • Allemagne • Suisse</div>
+  <div class="header">
+    <h1>🚗 Driver France</h1>
+    <p>Votre chauffeur VTC privé</p>
+  </div>
 
-<label>Départ</label>
-<input id="depart" type="text" placeholder="Adresse de départ">
+  <div class="card">
 
-<label>Destination</label>
-<input id="destination" type="text" placeholder="Adresse d'arrivée">
+    <h2>Réserver votre trajet</h2>
 
-<label>Type de course</label>
-<select id="type" onchange="calculer()">
-<option value="normal">Course normale - 2 €/km</option>
-<option value="airport">Aéroport Strasbourg - 28 €</option>
-</select>
+    <label>📍 Départ</label>
+    <input id="depart" type="text" placeholder="Adresse de départ">
 
-<label>Distance en kilomètres</label>
-<input id="km" type="number" min="0" placeholder="Ex : 25" oninput="calculer()">
+    <label>📍 Destination</label>
+    <input id="destination" type="text" placeholder="Adresse d'arrivée">
 
-<label>Date</label>
-<input id="date" type="date">
+    <label>📅 Date</label>
+    <input id="date" type="date">
 
-<label>Heure</label>
-<input id="heure" type="time">
+    <label>🕐 Heure</label>
+    <input id="heure" type="time">
 
-<label>Nombre de passagers</label>
-<select id="passagers">
-<option>1</option>
-<option>2</option>
-<option>3</option>
-<option>4</option>
-</select>
+    <label>👤 Passagers</label>
+    <select id="passagers">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+    </select>
 
-<label>Paiement</label>
-<select id="paiement">
-<option>Carte bancaire</option>
-<option>Espèces</option>
-</select>
+    <label>🚘 Type de véhicule</label>
+    <select id="vehicule">
+      <option>Berline</option>
+      <option>Van</option>
+    </select>
 
-<div class="price">
-Prix estimé : <span id="prix">0</span> €
-</div>
+    <label>🛣️ Distance du trajet (km)</label>
+    <input id="distance" type="number" min="1" placeholder="Exemple : 25">
 
-<button onclick="reserver()">DEMANDER UNE RÉSERVATION</button>
+    <label>💳 Mode de paiement</label>
+    <select id="paiement">
+      <option>Carte bancaire</option>
+      <option>Espèces</option>
+    </select>
 
-<div class="info">
-Service VTC professionnel<br>
-Strasbourg et alentours<br>
-France 🇫🇷 • Allemagne 🇩🇪 • Suisse 🇨🇭
-</div>
+    <button class="airport" onclick="airportPrice()">
+      ✈️ Transfert aéroport - 28 €
+    </button>
+
+    <button class="calculate" onclick="calculer()">
+      Calculer le prix
+    </button>
+
+    <div class="result" id="result">
+      <div>Distance : <b id="km"></b> km</div>
+      <div class="price" id="prix"></div>
+      <div id="details"></div>
+
+      <button class="book" onclick="reserver()">
+        📲 Demander la réservation
+      </button>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>🌍 Zones desservies</h3>
+    <p>🇫🇷 France</p>
+    <p>🇩🇪 Allemagne</p>
+    <p>🇨🇭 Suisse</p>
+  </div>
+
+  <div class="footer">
+    Driver France VTC<br>
+    Strasbourg • France • Allemagne • Suisse
+  </div>
 
 </div>
 
 <script>
 
-function calculer() {
+function calculer(){
 
-  let type = document.getElementById("type").value;
-  let km = Number(document.getElementById("km").value) || 0;
+  let depart = document.getElementById("depart").value;
+  let destination = document.getElementById("destination").value;
+  let distance = parseFloat(document.getElementById("distance").value);
 
-  let prix = 0;
-
-  if (type === "airport") {
-    prix = 28;
-  } else {
-    prix = km * 2;
+  if(!depart || !destination || !distance){
+    alert("Veuillez renseigner le départ, la destination et la distance.");
+    return;
   }
 
-  document.getElementById("prix").innerText =
-    prix.toFixed(2);
+  let prix = distance * 2;
+
+  document.getElementById("km").textContent = distance;
+  document.getElementById("prix").textContent =
+    prix.toFixed(2) + " €";
+
+  document.getElementById("details").innerHTML =
+    "Tarif : 2 € / km<br>" +
+    "Départ : " + depart + "<br>" +
+    "Destination : " + destination;
+
+  document.getElementById("result").style.display = "block";
 }
 
-function reserver() {
+function airportPrice(){
+
+  document.getElementById("prix").textContent = "28 €";
+  document.getElementById("km").textContent = "Forfait";
+
+  document.getElementById("details").innerHTML =
+    "✈️ Transfert aéroport<br>" +
+    "Forfait : 28 €";
+
+  document.getElementById("result").style.display = "block";
+}
+
+function reserver(){
 
   let depart = document.getElementById("depart").value;
   let destination = document.getElementById("destination").value;
   let date = document.getElementById("date").value;
   let heure = document.getElementById("heure").value;
+  let passagers = document.getElementById("passagers").value;
+  let paiement = document.getElementById("paiement").value;
+  let prix = document.getElementById("prix").textContent;
 
-  if (!depart || !destination || !date || !heure) {
-    alert("Merci de remplir le départ, la destination, la date et l'heure.");
-    return;
-  }
+  let message =
+    "Bonjour, je souhaite réserver un VTC.%0A%0A" +
+    "Départ : " + depart + "%0A" +
+    "Destination : " + destination + "%0A" +
+    "Date : " + date + "%0A" +
+    "Heure : " + heure + "%0A" +
+    "Passagers : " + passagers + "%0A" +
+    "Paiement : " + paiement + "%0A" +
+    "Prix estimé : " + prix;
 
-  let prix = document.getElementById("prix").innerText;
-
-  alert(
-    "Demande de réservation Driver France\n\n" +
-    "Départ : " + depart + "\n" +
-    "Destination : " + destination + "\n" +
-    "Date : " + date + "\n" +
-    "Heure : " + heure + "\n" +
-    "Prix estimé : " + prix + " €"
-  );
+  window.location.href =
+    "https://wa.me/33668184949?text=" + message;
 }
 
 </script>
